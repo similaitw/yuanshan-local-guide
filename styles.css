@@ -99,3 +99,35 @@
   .source-card h2{font-size:27px}
   .mobile-filter-dialog{max-height:90vh}
 }
+
+/* Clean interface pass */
+.visually-muted{display:none!important}
+.hero{min-height:350px}
+.hero-content{padding:54px 0 62px}
+.hero h1{font-size:clamp(42px,6vw,66px);max-width:none}
+.hero-copy{display:none}
+.hero-cta{margin-top:22px}
+.brand small,.update-badge{display:none!important}
+.route-planner{padding-top:15px;padding-bottom:15px}
+.route-empty{padding:10px 12px}
+.route-note{display:none!important}
+.source-section{display:none!important}
+.map-head,.list-head{padding-top:14px;padding-bottom:14px}
+.map-head h2,.list-head h2{font-size:24px}
+.footer-inner{align-items:center}
+@media(max-width:700px){
+  .hero{min-height:255px}
+  .topbar{height:62px}
+  .hero-content{padding:30px 0 40px}
+  .hero .eyebrow{margin-bottom:6px;font-size:10px}
+  .hero h1{font-size:34px}
+  .hero-cta{margin-top:16px}
+  .primary-btn{padding:11px 15px;font-size:12px}
+  .planner-bar{margin-top:-18px}
+  .route-planner{padding:10px 12px}
+  .route-empty{padding:8px 10px}
+  .map-head,.list-head{padding:10px 12px}
+  .map-head h2,.list-head h2{font-size:19px}
+  footer{padding:20px 0 28px}
+  .footer-inner{font-size:10px}
+}
