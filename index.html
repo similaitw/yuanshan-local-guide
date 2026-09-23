@@ -53,6 +53,16 @@
       <button class="locate-compact" id="nearbyBtn" type="button">📍 離我最近</button>
     </section>
 
+    <section class="shell mobile-tools" aria-label="手機快速操作">
+      <button class="mobile-filter-btn" id="mobileFilterBtn" type="button">
+        <span>☰ 分類</span><b id="mobileFilterLabel">全部</b>
+      </button>
+      <div class="mobile-view-switch" role="group" aria-label="切換地圖或列表">
+        <button id="mobileMapBtn" type="button">🗺️ 地圖</button>
+        <button id="mobileListBtn" class="active" type="button">☰ 列表</button>
+      </div>
+    </section>
+
     <section class="shell filter-row" aria-label="地點篩選">
       <div class="chips" id="chips"></div>
       <div class="quick-actions">
@@ -119,6 +129,27 @@
       </div>
     </section>
   </main>
+
+  <dialog id="mobileFilterDialog" class="mobile-filter-dialog">
+    <div class="mobile-filter-sheet">
+      <div class="mobile-filter-head">
+        <div><p class="eyebrow dark">分類與條件</p><h2>想找什麼？</h2></div>
+        <button id="mobileFilterClose" class="mobile-filter-close" type="button" aria-label="關閉">×</button>
+      </div>
+      <div class="mobile-category-grid" id="mobileCategoryGrid"></div>
+      <div class="mobile-filter-subtitle">快速條件</div>
+      <div class="mobile-quick-grid">
+        <button type="button" data-mobile-filter="family">👨‍👩‍👧<span>親子</span></button>
+        <button type="button" data-mobile-filter="rain">☂<span>雨天</span></button>
+        <button type="button" data-mobile-filter="free">$<span>免費</span></button>
+        <button type="button" data-mobile-filter="nearby">📍<span>最近</span></button>
+      </div>
+      <div class="mobile-filter-actions">
+        <button id="mobileFilterReset" type="button">重設</button>
+        <button id="mobileFilterDone" class="primary" type="button">完成</button>
+      </div>
+    </div>
+  </dialog>
 
   <footer>
     <div class="shell footer-inner">
