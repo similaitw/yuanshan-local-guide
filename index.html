@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#86c7f4" />
+  <meta name="description" content="宜蘭縣員山鄉美食、景點、親子農場、咖啡與在地散步點互動地圖，支援定位、距離排序與 Google Maps 導航。" />
+  <meta name="color-scheme" content="light" />
+  <meta property="og:title" content="員山走走｜宜蘭員山美食景點地圖" />
+  <meta property="og:description" content="員山鄉吃喝玩樂一次找齊：定位、距離排序、親子／雨天／免費篩選與 Google Maps 導航。" />
+  <meta property="og:type" content="website" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <title>員山走走｜宜蘭員山美食景點地圖</title>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="topbar shell" aria-label="主要導覽">
+      <a class="brand" href="#top" aria-label="回到首頁">
+        <span class="brand-mark">員</span>
+        <span><b>員山走走</b><small>YuanShan Guide</small></span>
+      </a>
+      <div class="top-actions">
+        <span class="update-badge">更新 2026.09.23</span>
+        <button class="ghost-btn" id="shareBtn" type="button" aria-label="分享網站">↗</button>
+        <button class="ghost-btn" id="themeBtn" type="button" aria-label="切換顯示模式">◐</button>
+      </div>
+    </nav>
+
+    <section class="hero-content shell" id="top">
+      <p class="eyebrow">宜蘭縣・員山鄉</p>
+      <div class="hero-pills" aria-label="旅遊特色"><span>親子</span><span>散步</span><span>好吃</span></div>
+      <h1>帶孩子去員山，<br><span>吃什麼、玩哪裡都好找。</span></h1>
+      <p class="hero-copy">把魚丸米粉、窯烤雞、咖啡甜點、埤塘、湧泉、農場與適合散步的地方，放進同一張地圖。開啟定位後，就能直接看離你最近的去處。</p>
+      <div class="hero-cta">
+        <button class="primary-btn" id="locateBtn" type="button">◎ 使用我的位置</button>
+        <a class="secondary-btn" href="#mapSection">看地圖</a>
+      </div>
+      <div class="hero-stats" aria-label="網站資料摘要">
+        <div><strong id="placeCount">50</strong><span>精選地點</span></div>
+        <div><strong>8</strong><span>分類</span></div>
+        <div><strong>一鍵</strong><span>導航</span></div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="control-panel shell" aria-label="搜尋與篩選">
+      <div class="search-wrap">
+        <span aria-hidden="true">⌕</span>
+        <input id="searchInput" type="search" placeholder="搜尋：魚丸米粉、望龍埤、咖啡、親子…" autocomplete="off" />
+        <button id="clearSearch" class="clear-search" type="button" aria-label="清除搜尋">×</button>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="分類篩選"></div>
+      <div class="quick-actions">
+        <button class="action-chip active" id="allBtn" type="button">全部推薦</button>
+        <button class="action-chip" id="nearbyBtn" type="button">📍 離我最近</button>
+        <button class="action-chip" id="openNowBtn" type="button">◷ 今天可排</button>
+        <button class="action-chip family-chip" id="familyBtn" type="button">👨‍👩‍👧 親子友善</button>
+        <button class="action-chip" id="rainBtn" type="button">☂ 雨天備案</button>
+        <button class="action-chip" id="freeBtn" type="button">$ 免費去處</button>
+        <button class="action-chip" id="resetBtn" type="button">↺ 重設</button>
+      </div>
+    </section>
+
+    <section class="shell map-section" id="mapSection">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow dark">導航地圖</p>
+          <h2>地圖導覽</h2>
+        </div>
+        <p id="mapStatus">正在載入員山地圖資料…</p>
+      </div>
+      <div class="map-layout">
+        <div id="map" aria-label="員山鄉互動地圖"></div>
+        <aside class="map-side" id="nearbyPanel">
+          <div class="map-side-head">
+            <div>
+              <span class="mini-label">附近推薦</span>
+              <h3>離你最近</h3>
+            </div>
+            <button class="tiny-btn" id="refreshLocation" type="button">重新定位</button>
+          </div>
+          <div id="nearbyContent" class="empty-state">
+            <span>◎</span>
+            <p>按「使用我的位置」，會依你目前的位置排序員山好去處。</p>
+          </div>
+        </aside>
+      </div>
+      <p class="map-note">地圖底圖：OpenStreetMap。定位只在你的瀏覽器內使用，不會上傳本站伺服器；「今天可排」不是即時營業狀態，實際營業時間、票價與公休日請以店家／景點最新公告為準。</p>
+    </section>
+
+    <section class="shell route-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow dark">懶人路線</p>
+          <h2>半日、一日都好排</h2>
+        </div>
+        <p>按一下即可用 Google Maps 串起多個停靠點。</p>
+      </div>
+      <div class="route-grid" id="routeGrid"></div>
+    </section>
+
+    <section class="shell places-section" id="placesSection">
+      <div class="section-head sticky-head">
+        <div>
+          <p class="eyebrow dark">精選地點</p>
+          <h2>大人小孩都能挑</h2>
+        </div>
+        <p id="resultCount">顯示 50 個地點</p>
+      </div>
+      <div class="places-grid" id="placesGrid"></div>
+      <button class="load-more" id="loadMoreBtn" type="button">顯示更多</button>
+    </section>
+
+    <section class="shell source-section">
+      <div class="source-card">
+        <p class="eyebrow">資料說明</p>
+        <h2>這份整理怎麼來的？</h2>
+        <p>以宜蘭縣政府「宜蘭勁好玩」員山鄉旅遊資料、目前可查到的店家地圖資料與員山美食整理交叉彙整；互動地圖再用 OpenStreetMap 公開 POI 補充座標。網站會持續更新，但不是官方完整名錄，店家仍可能臨時休息、搬遷或歇業。</p>
+        <div class="source-links">
+          <a href="https://travel.yilan.gov.tw/zh-tw/district-fun/8/" target="_blank" rel="noopener">宜蘭勁好玩・員山鄉 ↗</a>
+          <a href="https://house.ilantravel.com.tw/food_guide/yuanshan-food.php" target="_blank" rel="noopener">員山美食整理 ↗</a>
+          <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div><b>員山走走</b><span>宜蘭縣員山鄉美食景點導航</span></div>
+      <p>2026.09.23 · 在地散步地圖</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
