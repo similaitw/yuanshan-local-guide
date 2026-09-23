@@ -11,7 +11,7 @@ for(const p of places){
 }
 for(const r of routes)for(const id of r.ids||[])if(!ids.has(id))errors.push(`路線 ${r.name} 引用不存在 id: ${id}`);
 const html=fs.readFileSync(new URL('index.html',root),'utf8');
-for(const id of ['mapFrame','mapPlaceSelect','placesGrid','locateBtn','nearbyBtn','tripSelect','routeStops','openRouteBtn'])if(!html.includes(`id="${id}"`))errors.push(`index.html 缺少 #${id}`);
+for(const id of ['mapFrame','mapPlaceSelect','placesGrid','locateBtn','nearbyBtn','tripSelect','routeStops','openRouteBtn','mobileFilterBtn','mobileCategoryGrid','mobileMapBtn','mobileListBtn'])if(!html.includes(`id="${id}"`))errors.push(`index.html 缺少 #${id}`);
 const app=fs.readFileSync(new URL('app.js',root),'utf8');
 if(!app.includes('maps.google.com/maps?q='))errors.push('缺少免 API Key Google Maps iframe');
 if(!app.includes('google.com/maps/dir/?'))errors.push('缺少 Google Maps 多站路線 URL');
