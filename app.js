@@ -6,7 +6,11 @@ const els = {
   loadMore: $('#loadMoreBtn'), locate: $('#locateBtn'), nearby: $('#nearbyBtn'), family: $('#familyBtn'), rain: $('#rainBtn'), free: $('#freeBtn'),
   reset: $('#resetBtn'), share: $('#shareBtn'), tripSelect: $('#tripSelect'), routeStops: $('#routeStops'), routeEmpty: $('#routeEmpty'),
   clearRoute: $('#clearRouteBtn'), openRoute: $('#openRouteBtn'), mapStatus: $('#mapStatus'), mapFrame: $('#mapFrame'),
-  mapPlaceSelect: $('#mapPlaceSelect'), openGoogleMap: $('#openGoogleMap')
+  mapPlaceSelect: $('#mapPlaceSelect'), openGoogleMap: $('#openGoogleMap'),
+  mobileFilterBtn: $('#mobileFilterBtn'), mobileFilterLabel: $('#mobileFilterLabel'),
+  mobileFilterDialog: $('#mobileFilterDialog'), mobileFilterClose: $('#mobileFilterClose'),
+  mobileCategoryGrid: $('#mobileCategoryGrid'), mobileFilterReset: $('#mobileFilterReset'), mobileFilterDone: $('#mobileFilterDone'),
+  mobileMapBtn: $('#mobileMapBtn'), mobileListBtn: $('#mobileListBtn')
 };
 
 const categories = [['全部','全部'],['小吃','🍜 小吃'],['正餐','🍗 正餐'],['咖啡','☕ 咖啡'],['自然','🌿 自然'],['農場','🚜 農場'],['親子','👨‍👩‍👧 親子'],['文化','🏯 文化'],['酒廠','🥃 酒廠']];
@@ -39,6 +43,38 @@ function buildTripSelect(){
 }
 function buildChips(){
   els.chips.innerHTML=categories.map(([k,l])=>`<button class="chip ${k==='全部'?'active':''}" data-cat="${k}" type="button">${l}</button>`).join('');
+}
+function buildMobileCategories(){
+  els.mobileCategoryGrid.innerHTML=categories.map(([k,l])=>{
+    const match=l.match(/^([^\s]+)\s(.+)$/);
+    const icon=k==='全部'?'✦':(match?.[1]||'•');
+    const label=k==='全部'?'全部':(match?.[2]||l);
+    return `<button type="button" data-mobile-cat="${k}" class="${k==='全部'?'active':''}"><span>${icon}</span>${label}</button>`;
+  }).join('');
+}
+function syncFilterControls(){
+  document.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active',b.dataset.cat===activeCategory));
+  document.querySelectorAll('[data-mobile-cat]').forEach(b=>b.classList.toggle('active',b.dataset.mobileCat===activeCategory));
+  if(els.mobileFilterLabel) els.mobileFilterLabel.textContent=activeCategory;
+  document.querySelectorAll('[data-mobile-filter]').forEach(b=>{
+    const key=b.dataset.mobileFilter;
+    const active=key==='family'?familyMode:key==='rain'?rainMode:key==='free'?freeMode:key==='nearby'?nearbyMode:false;
+    b.classList.toggle('active',active);
+  });
+  els.family.classList.toggle('active',familyMode);
+  els.rain.classList.toggle('active',rainMode);
+  els.free.classList.toggle('active',freeMode);
+  els.nearby.classList.toggle('active',nearbyMode);
+}
+function setMobileView(view,scroll=false){
+  document.body.dataset.mobileView=view;
+  els.mobileMapBtn?.classList.toggle('active',view==='map');
+  els.mobileListBtn?.classList.toggle('active',view==='list');
+  if(scroll) document.querySelector('.explore-layout')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resetFilters(){
+  activeCategory='全部';query='';nearbyMode=familyMode=rainMode=freeMode=false;showCount=16;
+  els.search.value='';syncFilterControls();renderList();
 }
 function passesSmart(p){
   const tags=p.tags||[];
@@ -104,7 +140,11 @@ function focusPlace(id){
   updateMap();
   els.mapPlaceSelect.value=id;
   document.querySelectorAll('.place-card').forEach(c=>c.classList.toggle('active',c.dataset.id===id));
-  document.querySelector(`.place-card[data-id="${id}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(matchMedia('(max-width: 700px)').matches){
+    setMobileView('map',true);
+  }else{
+    document.querySelector(`.place-card[data-id="${id}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
 }
 
 async function geocodePlace(p){
@@ -137,7 +177,7 @@ function requestLocation(){
   els.locate.disabled=true;els.locate.textContent='定位中…';
   navigator.geolocation.getCurrentPosition(pos=>{
     userPos={lat:pos.coords.latitude,lng:pos.coords.longitude};
-    els.locate.disabled=false;els.locate.textContent='✓ 已定位';nearbyMode=true;els.nearby.classList.add('active');
+    els.locate.disabled=false;els.locate.textContent='✓ 已定位';nearbyMode=true;syncFilterControls();
     toast('已取得位置，正在計算距離');resolveDistances();
   },()=>{els.locate.disabled=false;els.locate.textContent='◎ 使用我的位置';toast('目前無法取得位置');},{enableHighAccuracy:true,timeout:12000,maximumAge:120000});
 }
@@ -146,12 +186,12 @@ els.search.addEventListener('input',e=>{query=e.target.value.trim();showCount=16
 els.clearSearch.addEventListener('click',()=>{query='';els.search.value='';renderList();});
 els.loadMore.addEventListener('click',()=>{showCount+=16;renderList();});
 els.locate.addEventListener('click',requestLocation);
-els.nearby.addEventListener('click',()=>{if(!userPos){requestLocation();return;}nearbyMode=!nearbyMode;els.nearby.classList.toggle('active',nearbyMode);renderList();});
-els.family.addEventListener('click',()=>{familyMode=!familyMode;els.family.classList.toggle('active',familyMode);renderList();});
-els.rain.addEventListener('click',()=>{rainMode=!rainMode;els.rain.classList.toggle('active',rainMode);renderList();});
-els.free.addEventListener('click',()=>{freeMode=!freeMode;els.free.classList.toggle('active',freeMode);renderList();});
-els.reset.addEventListener('click',()=>{activeCategory='全部';query='';nearbyMode=familyMode=rainMode=freeMode=false;els.search.value='';document.querySelectorAll('.chip').forEach((x,i)=>x.classList.toggle('active',i===0));[els.nearby,els.family,els.rain,els.free].forEach(x=>x.classList.remove('active'));renderList();});
-els.chips.addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;activeCategory=b.dataset.cat;showCount=16;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x===b));renderList();});
+els.nearby.addEventListener('click',()=>{if(!userPos){requestLocation();return;}nearbyMode=!nearbyMode;syncFilterControls();renderList();});
+els.family.addEventListener('click',()=>{familyMode=!familyMode;syncFilterControls();renderList();});
+els.rain.addEventListener('click',()=>{rainMode=!rainMode;syncFilterControls();renderList();});
+els.free.addEventListener('click',()=>{freeMode=!freeMode;syncFilterControls();renderList();});
+els.reset.addEventListener('click',resetFilters);
+els.chips.addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;activeCategory=b.dataset.cat;showCount=16;syncFilterControls();renderList();});
 els.tripSelect.addEventListener('change',()=>{if(els.tripSelect.value==='')return;const r=routes[+els.tripSelect.value];routeIds=[...(r?.ids||[])];renderRoute();toast(`已套用：${r.name}`);});
 els.grid.addEventListener('click',e=>{const f=e.target.closest('[data-focus]'),a=e.target.closest('[data-route-add]');if(f)focusPlace(f.dataset.focus);if(a)addToRoute(a.dataset.routeAdd);});
 els.mapPlaceSelect.addEventListener('change',()=>{selectedId=els.mapPlaceSelect.value||'';updateMap();renderList();});
@@ -159,5 +199,28 @@ els.routeStops.addEventListener('click',e=>{const up=e.target.closest('[data-up]
 els.clearRoute.addEventListener('click',()=>{routeIds=[];els.tripSelect.value='';renderRoute();});
 els.openRoute.addEventListener('click',()=>{const url=googleDirectionsUrl();if(url)window.open(url,'_blank','noopener');});
 els.share.addEventListener('click',async()=>{try{if(navigator.share)await navigator.share({title:'員山走走',text:'員山美食景點與路線規劃',url:location.href});else{await navigator.clipboard.writeText(location.href);toast('網址已複製');}}catch{}});
+els.mobileFilterBtn?.addEventListener('click',()=>els.mobileFilterDialog.showModal());
+els.mobileFilterClose?.addEventListener('click',()=>els.mobileFilterDialog.close());
+els.mobileFilterDone?.addEventListener('click',()=>els.mobileFilterDialog.close());
+els.mobileFilterReset?.addEventListener('click',()=>{resetFilters();});
+els.mobileCategoryGrid?.addEventListener('click',e=>{
+  const b=e.target.closest('[data-mobile-cat]');if(!b)return;
+  activeCategory=b.dataset.mobileCat;showCount=16;syncFilterControls();renderList();
+});
+els.mobileFilterDialog?.addEventListener('click',e=>{
+  const b=e.target.closest('[data-mobile-filter]');if(!b)return;
+  const key=b.dataset.mobileFilter;
+  if(key==='family') familyMode=!familyMode;
+  if(key==='rain') rainMode=!rainMode;
+  if(key==='free') freeMode=!freeMode;
+  if(key==='nearby'){
+    if(!userPos){els.mobileFilterDialog.close();requestLocation();return;}
+    nearbyMode=!nearbyMode;
+  }
+  syncFilterControls();renderList();
+});
+els.mobileMapBtn?.addEventListener('click',()=>setMobileView('map'));
+els.mobileListBtn?.addEventListener('click',()=>setMobileView('list'));
 
-buildTripSelect();buildChips();renderRoute();updateMap();
+document.body.dataset.mobileView='list';
+buildTripSelect();buildChips();buildMobileCategories();syncFilterControls();renderRoute();updateMap();
