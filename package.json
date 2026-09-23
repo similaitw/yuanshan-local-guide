@@ -1,0 +1,9 @@
+{
+  "name": "yuanshan-local-guide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "宜蘭縣員山鄉美食、景點與導航地圖",
+  "scripts": {
+    "test": "node scripts/validate.mjs"
+  }
+}
