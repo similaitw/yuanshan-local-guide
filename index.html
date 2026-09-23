@@ -29,7 +29,7 @@
     <section class="hero-content shell">
       <p class="eyebrow">宜蘭縣・員山鄉</p>
       <h1>找吃的、找景點，<br><span>順手排成一條路。</span></h1>
-      <p class="hero-copy">首頁直接看地圖與地點列表。找到想去的地方就加進路線，調整順序後一鍵交給 Google Maps 導航。</p>
+      <p class="hero-copy">首頁直接看 Google 地圖與地點列表。找到想去的地方就加進路線，調整順序後一鍵交給 Google Maps 導航。</p>
       <div class="hero-cta">
         <button class="primary-btn" id="locateBtn" type="button">◎ 使用我的位置</button>
         <a class="secondary-btn" href="#explore">開始找地點</a>
@@ -76,21 +76,24 @@
       </div>
       <div class="route-empty" id="routeEmpty">從右側列表按「＋ 路線」加入停靠點，或從上方選一條建議行程。</div>
       <ol class="route-stops" id="routeStops"></ol>
-      <p class="route-note">手機版 Google Maps 的 Maps URL 最多支援 3 個中途點；停靠點過多時，網站會保留前 5 站開啟路線。Google Maps 會依你設定的順序規劃。</p>
+      <p class="route-note">手機版 Google Maps 的 Maps URL 中途點數量較少；停靠點過多時，網站會保留前 5 站開啟路線。</p>
     </section>
 
     <section class="shell explore-layout">
       <div class="map-panel">
         <div class="map-head">
           <div><p class="eyebrow dark">Google 地圖</p><h2>員山地圖</h2></div>
-          <p id="mapStatus">正在準備地圖…</p>
+          <div>
+            <p id="mapStatus">免 API Key</p>
+            <a id="openGoogleMap" target="_blank" rel="noopener">Google Maps ↗</a>
+          </div>
+        </div>
+        <div class="map-picker-row">
+          <label for="mapPlaceSelect">地圖顯示</label>
+          <select id="mapPlaceSelect" aria-label="選擇地圖顯示地點"></select>
         </div>
         <div id="map" aria-label="員山 Google 地圖">
-          <div class="map-placeholder" id="mapPlaceholder">
-            <b>Google 地圖尚未載入</b>
-            <p>網站已改為 Google Maps。設定 Maps JavaScript API key 後，這裡會顯示全部地點標記。</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=%E5%AE%9C%E8%98%AD%E7%B8%A3%E5%93%A1%E5%B1%B1%E9%84%89" target="_blank" rel="noopener">先用 Google Maps 開啟員山 ↗</a>
-          </div>
+          <iframe id="mapFrame" class="mapframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="員山 Google 地圖"></iframe>
         </div>
       </div>
 
@@ -125,7 +128,6 @@
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="maps-config.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
