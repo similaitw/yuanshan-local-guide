@@ -95,16 +95,16 @@ function cardHtml(p){
   return `<article class="place-card ${selected?'active':''}" data-id="${p.id}">
     <span class="place-emoji">${p.emoji}</span>
     <div class="place-main">
-      <div class="place-title-row"><div><h3>${p.name}</h3><div class="place-meta"><span class="tag">${p.cat}</span>${(p.tags||[]).slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div></div><span class="place-distance">${d==null?'':d<1?`${Math.round(d*1000)} m`:`${d.toFixed(1)} km`}</span></div>
-      <p class="place-desc">${p.desc}</p><div class="place-address">${p.address}</div>
-      <div class="place-actions"><button class="focus-btn" data-focus="${p.id}" type="button">地圖</button><button class="add-route-btn ${added?'added':''}" data-route-add="${p.id}" type="button">${added?'✓ 已加入':'＋ 路線'}</button><a class="nav-link" href="${googleSearchUrl(p)}" target="_blank" rel="noopener">Google Maps ↗</a></div>
+      <div class="place-title-row"><div><h3>${p.name}</h3><div class="place-meta"><span class="tag">${p.cat}</span>${(p.tags||[]).slice(0,1).map(t=>`<span class="tag">${t}</span>`).join('')}</div></div><span class="place-distance">${d==null?'':d<1?`${Math.round(d*1000)} m`:`${d.toFixed(1)} km`}</span></div>
+      <div class="place-address">${p.address}</div>
+      <div class="place-actions"><button class="focus-btn" data-focus="${p.id}" type="button">地圖</button><button class="add-route-btn ${added?'added':''}" data-route-add="${p.id}" type="button">${added?'✓ 已加入':'＋ 路線'}</button><a class="nav-link" href="${googleSearchUrl(p)}" target="_blank" rel="noopener">導航 ↗</a></div>
     </div>
   </article>`;
 }
 function renderList(){
   const list=filteredPlaces();
-  els.grid.innerHTML=list.slice(0,showCount).map(cardHtml).join('')||'<div class="map-placeholder"><b>沒有符合的地點</b><p>換個關鍵字或清除篩選看看。</p></div>';
-  els.resultCount.textContent=`${list.length} 個地點${nearbyMode&&userPos?' · 依距離':''}`;
+  els.grid.innerHTML=list.slice(0,showCount).map(cardHtml).join('')||'<div class="map-placeholder"><b>沒有結果</b></div>';
+  els.resultCount.textContent=`${list.length} 個${nearbyMode&&userPos?' · 距離排序':''}`;
   els.loadMore.classList.toggle('hidden',showCount>=list.length);
   syncMapSelect(list);
 }
