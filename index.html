@@ -18,22 +18,19 @@
     <nav class="topbar shell" aria-label="主要導覽">
       <a class="brand" href="#top" aria-label="回到首頁">
         <span class="brand-mark">員</span>
-        <span><b>員山走走</b><small>YUANSHAN GUIDE</small></span>
+        <span><b>員山走走</b></span>
       </a>
       <div class="top-actions">
-        <span class="update-badge">更新 2026.09.23</span>
         <button class="ghost-btn" id="shareBtn" type="button" aria-label="分享網站">↗</button>
       </div>
     </nav>
 
     <section class="hero-content shell">
-      <p class="eyebrow">宜蘭縣・員山鄉</p>
-      <h1>找吃的、找景點，<br><span>順手排成一條路。</span></h1>
-      <p class="hero-copy">首頁直接看 Google 地圖與地點列表。找到想去的地方就加進路線，調整順序後一鍵交給 Google Maps 導航。</p>
+      <p class="eyebrow">宜蘭・員山</p>
+      <h1>吃什麼・去哪玩</h1>
       <div class="hero-cta">
         <button class="primary-btn" id="locateBtn" type="button">◎ 使用我的位置</button>
-        <a class="secondary-btn" href="#explore">開始找地點</a>
-      </div>
+       </div>
     </section>
   </header>
 
@@ -76,25 +73,23 @@
     <section class="shell route-planner" id="routePlanner">
       <div class="route-head">
         <div>
-          <p class="eyebrow dark">我的路線</p>
-          <h2>今天想去哪？</h2>
+          <h2>我的路線</h2>
         </div>
         <div class="route-actions">
           <button class="text-btn" id="clearRouteBtn" type="button">清空</button>
-          <button class="route-open-btn" id="openRouteBtn" type="button" disabled>用 Google Maps 規劃路線 ↗</button>
+          <button class="route-open-btn" id="openRouteBtn" type="button" disabled>Google Maps ↗</button>
         </div>
       </div>
-      <div class="route-empty" id="routeEmpty">從右側列表按「＋ 路線」加入停靠點，或從上方選一條建議行程。</div>
+      <div class="route-empty" id="routeEmpty">尚未加入地點</div>
       <ol class="route-stops" id="routeStops"></ol>
-      <p class="route-note">手機版 Google Maps 的 Maps URL 中途點數量較少；停靠點過多時，網站會保留前 5 站開啟路線。</p>
-    </section>
+     </section>
 
     <section class="shell explore-layout">
       <div class="map-panel">
         <div class="map-head">
-          <div><p class="eyebrow dark">Google 地圖</p><h2>員山地圖</h2></div>
+          <div><h2>地圖</h2></div>
           <div>
-            <p id="mapStatus">免 API Key</p>
+            <p id="mapStatus" class="visually-muted">地圖</p>
             <a id="openGoogleMap" target="_blank" rel="noopener">Google Maps ↗</a>
           </div>
         </div>
@@ -109,7 +104,7 @@
 
       <aside class="list-panel" aria-label="地點列表">
         <div class="list-head">
-          <div><p class="eyebrow dark">地點列表</p><h2>吃喝玩樂</h2></div>
+          <div><h2>地點</h2></div>
           <p id="resultCount">50 個地點</p>
         </div>
         <div class="places-list" id="placesGrid"></div>
@@ -117,27 +112,16 @@
       </aside>
     </section>
 
-    <section class="shell source-section">
-      <div class="source-card">
-        <p class="eyebrow">資料說明</p>
-        <h2>出發前再確認一次</h2>
-        <p>店家可能臨時休息、搬遷或調整營業時間；導航前建議再看 Google Maps 最新資訊。網站整理以宜蘭縣政府旅遊資料與公開店家資訊為基礎。</p>
-        <div class="source-links">
-          <a href="https://travel.yilan.gov.tw/zh-tw/district-fun/8/" target="_blank" rel="noopener">宜蘭勁好玩・員山鄉 ↗</a>
-          <a href="https://www.google.com/maps/search/?api=1&query=%E5%93%A1%E5%B1%B1%E9%84%89" target="_blank" rel="noopener">Google Maps 員山 ↗</a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <dialog id="mobileFilterDialog" class="mobile-filter-dialog">
     <div class="mobile-filter-sheet">
       <div class="mobile-filter-head">
-        <div><p class="eyebrow dark">分類與條件</p><h2>想找什麼？</h2></div>
+        <div><h2>分類</h2></div>
         <button id="mobileFilterClose" class="mobile-filter-close" type="button" aria-label="關閉">×</button>
       </div>
       <div class="mobile-category-grid" id="mobileCategoryGrid"></div>
-      <div class="mobile-filter-subtitle">快速條件</div>
+      <div class="mobile-filter-subtitle">條件</div>
       <div class="mobile-quick-grid">
         <button type="button" data-mobile-filter="family">👨‍👩‍👧<span>親子</span></button>
         <button type="button" data-mobile-filter="rain">☂<span>雨天</span></button>
@@ -153,8 +137,8 @@
 
   <footer>
     <div class="shell footer-inner">
-      <div><b>員山走走</b><span>宜蘭縣員山鄉美食景點與路線規劃</span></div>
-      <p>2026.09.23</p>
+      <div><b>員山走走</b><span>宜蘭・員山</span></div>
+      <p><a href="https://travel.yilan.gov.tw/zh-tw/district-fun/8/" target="_blank" rel="noopener">資料來源</a> · 2026.09.23</p>
     </div>
   </footer>
 
