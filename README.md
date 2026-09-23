@@ -1,6 +1,10 @@
 # 員山走走
 
-宜蘭縣員山鄉美食、景點、親子農場、咖啡與在地體驗導航網站。
+宜蘭縣員山鄉的美食、景點、親子農場、咖啡與在地體驗導航網站。
+
+## 立即部署到 Vercel
+
+[Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsimilaitw%2Fyuanshan-local-guide&project-name=yuanshan-local-guide)
 
 ## 功能
 
