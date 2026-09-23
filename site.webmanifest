@@ -1,0 +1,10 @@
+{
+  "name": "員山走走｜宜蘭員山美食景點地圖",
+  "short_name": "員山走走",
+  "lang": "zh-Hant-TW",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4fbff",
+  "theme_color": "#86c7f4",
+  "icons": [{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
