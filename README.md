@@ -1,47 +1,45 @@
 # 員山走走
 
-宜蘭縣員山鄉美食、景點與親子去處地圖。首頁採 Google Maps + 地點列表雙欄，並內建建議行程選單與自訂多站路線規劃。
+宜蘭縣員山鄉美食、景點與親子去處地圖。
+
+## 地圖架構
+
+本專案比照 `similaitw/nccu-eats`，**不使用 Google Maps JavaScript API，也不需要 API key**。
+
+- 首頁地圖：`https://maps.google.com/maps?q=...&output=embed` iframe
+- 單點開啟：Google Maps Search URL
+- 多站路線：Google Maps Directions URL
+- 使用者定位：瀏覽器 Geolocation API
+- 距離排序：定位後用網站快取的座標計算
 
 ## 主要功能
 
-- Google Maps 首頁多點地圖
-- 右側同步地點列表
-- 使用瀏覽器定位後依「離我最近」排序
-- 建議行程改為下拉選單
+- 首頁 Google 地圖 + 地點列表雙欄
+- 點列表「地圖」立即切換地圖顯示地點
+- 地圖上方可用下拉選單換地點
+- 使用目前位置後可依距離排序
+- 建議行程使用下拉選單
 - 任意地點加入「我的路線」
-- 路線停靠點可調整順序、刪除、清空
-- 一鍵用 Google Maps 開啟多站 Directions
+- 停靠點可調整順序、刪除、清空
+- 一鍵開啟 Google Maps 多站導航
 - 親子／雨天／免費與類別篩選
 - 50 個員山精選地點、4 條建議行程
 
-## Google Maps API Key
+## 本機預覽
 
-首頁地圖使用 **Google Maps JavaScript API**，需要 Browser API Key。
-
-1. 在 Google Cloud Console 啟用 Maps JavaScript API。
-2. 建立 API key。
-3. 強烈建議把 Application restrictions 設為 **Websites (HTTP referrers)**。
-4. 將正式網域加入允許清單，例如：
-   - `https://yuanshan-local-guide.vercel.app/*`
-   - 自訂網域 `https://你的網域/*`
-5. 編輯 `maps-config.js`：
-
-```js
-window.GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
+```bash
+python -m http.server 8080
 ```
 
-> Google Maps 瀏覽器 key 本來就會出現在前端，安全重點是限制 API 與 HTTP referrer，不是把 key 當成伺服器密碼隱藏。
+開啟 `http://localhost:8080`。
 
-## 路線規劃
-
-路線規劃使用 Google Maps URLs `https://www.google.com/maps/dir/?api=1`，不需要額外的 Directions API key。手機瀏覽器支援的中途點數量較少，因此目前網站最多送出 5 個停靠點。
-
-## 本機檢查
+## 檢查
 
 ```bash
 npm test
 node --check app.js
-python -m http.server 8080
 ```
 
-然後開啟 `http://localhost:8080`。
+## 部署
+
+純靜態網站，GitHub `main` 已連到 Vercel，push 後會自動 production deploy。
