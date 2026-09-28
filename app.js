@@ -1,4 +1,11 @@
 const places = window.YUANSHAN_PLACES || [];
+if (!places.some(p => p.id === 'dahu-scenic')) places.push({
+  id:'dahu-scenic', name:'大湖風景特定區（水印大湖）', cat:'自然', emoji:'🌊',
+  address:'宜蘭縣員山鄉湖北村湖前路185號',
+  desc:'2026/09/26 重新開園的湖岸景點。',
+  hours:'開放資訊依官方公告',
+  tags:['湖泊','景點']
+});
 const routes = window.YUANSHAN_ROUTES || [];
 const $ = (s) => document.querySelector(s);
 const els = {
