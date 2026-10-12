@@ -3,6 +3,7 @@ import vm from 'node:vm';
 const root=new URL('../',import.meta.url),context={window:{}};
 vm.createContext(context);
 vm.runInContext(fs.readFileSync(new URL('data.js',root),'utf8'),context);
+vm.runInContext(fs.readFileSync(new URL('data-additions.js',root),'utf8'),context);
 const places=context.window.YUANSHAN_PLACES||[],routes=context.window.YUANSHAN_ROUTES||[],ids=new Set(),errors=[];
 for(const p of places){
   if(!p.id||!p.name||!p.cat||!p.address)errors.push(`地點欄位不完整: ${p?.name||p?.id}`);
