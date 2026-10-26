@@ -50,7 +50,7 @@ window.YUANSHAN_PLACES = [
   {id:'air-shelter',name:'員山機堡（神風特攻機堡）',cat:'文化',emoji:'🛩️',address:'宜蘭縣員山鄉金山東路398號',desc:'二戰時期軍事歷史遺跡，適合文化與歷史小旅行。',hours:'平日與週六有分時段開放',tags:['歷史','古蹟']},
   {id:'kavalan',name:'金車噶瑪蘭威士忌酒廠',cat:'酒廠',emoji:'🥃',address:'宜蘭縣員山鄉員山路二段326號',desc:'參觀威士忌製程、酒堡與園區，是員山最具代表性的觀光工廠之一。',hours:'約 09:00–18:00',tags:['威士忌','觀光工廠']},
   {id:'jimdad',name:"吉姆老爹啤酒工場 Jim & Dad's",cat:'酒廠',emoji:'🍺',address:'宜蘭縣員山鄉員山路二段411號',desc:'精釀啤酒工場、紅磚建築、草地與觀景塔，可與噶瑪蘭酒廠串遊。',hours:'平日約 11:00–18:00；週末 10:00 起；週二常休',tags:['精釀啤酒','觀光工廠']},
-  {id:'beihou-temple',name:'北后寺',cat:'文化',emoji:'🏯',address:'宜蘭縣員山鄉八甲路4號',desc:'清幽寺院空間，旁邊就是「聽水」咖啡，可安排成一站。',hours:'白天參訪較合適',tags:['寺院','靜心']}
+  {id:'beihou-temple',name:'北后寺',cat:'文化',emoji:'🏯',address:'宜蘭縣員山鄉八甲路4號',desc:'清幽寺院空間，旁邊就是「聽水」咖啡，可安排成一站。',hours:'白天參訪較合適',tags:['寺院','靜心']},
   {id:'woodchu-succulent',name:'木渠多肉樂活農場',cat:'農場',emoji:'🪴',address:'宜蘭縣員山鄉枕山村坡城路9-12號',desc:'露天多肉植物庭園，適合親子散步與多肉組盆 DIY；平日參訪及 DIY 建議先預約。',hours:'假日 09:00–17:00；平日請先預約，公休日以店家公告為準',tags:['多肉植物','親子','DIY'],sourceUrl:'https://www.woodchu.com/contact/',secondarySourceUrl:'https://ezgo.ardswc.gov.tw/zh-tw/spot/1848/'}
 ];
 
